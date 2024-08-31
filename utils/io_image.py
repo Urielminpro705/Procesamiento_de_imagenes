@@ -61,4 +61,5 @@ def planes_print(bit_planes, filas, columnas):
 
 def print_img(img):
     plt.imshow(img, cmap='grey')
+    plt.axis('off')
     plt.show()
