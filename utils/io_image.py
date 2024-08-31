@@ -57,8 +57,9 @@ def planes_print(bit_planes, filas, columnas):
             eje[f,c].imshow(bit_planes[cont], cmap='grey')
             eje[f,c].axis('off')
             cont += 1
+    plt.figure(figsize=(10,100))
     plt.show()
 
 def print_img(img):
     plt.imshow(img, cmap='grey')
-    plt.show
+    plt.show()
