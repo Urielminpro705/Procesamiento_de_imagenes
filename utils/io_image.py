@@ -49,17 +49,32 @@ def image_bit_combination(img, planesList):
                 changedPlanes[i,a,b] = dec if bit_planes[planesList[i],a,b] == 255 else 0
     return np.sum(changedPlanes, axis=(0))
 
-def planes_print(bit_planes, filas, columnas):
+def planes_print(bit_planes,titulos, filas, columnas):
     figura, eje = plt.subplots(filas,columnas)
     cont = 0
-    for f in range(filas):
+    if filas == 1:
         for c in range(columnas):
-            eje[f,c].imshow(bit_planes[cont], cmap='grey')
-            eje[f,c].axis('off')
+            eje[c].imshow(bit_planes[cont], cmap='grey')
+            eje[c].axis('off')
+            try:
+                eje[c].set_title(titulos[cont])
+            except:
+                pass
             cont += 1
+    else:
+        for f in range(filas):
+            for c in range(columnas):
+                eje[f,c].imshow(bit_planes[cont], cmap='grey')
+                eje[f,c].axis('off')
+                try:
+                    eje[f,c].set_title(titulos[cont])
+                except:
+                    pass
+                cont += 1
     plt.show()
 
-def print_img(img):
+def print_img(img, titulo):
     plt.imshow(img, cmap='grey')
+    plt.suptitle(titulo)
     plt.axis('off')
     plt.show()
