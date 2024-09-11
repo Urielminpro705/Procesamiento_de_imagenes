@@ -54,23 +54,25 @@ def planes_print(bit_planes,titulos, filas, columnas):
     cont = 0
     if filas == 1:
         for c in range(columnas):
-            eje[c].imshow(bit_planes[cont], cmap='grey')
             eje[c].axis('off')
-            try:
-                eje[c].set_title(titulos[cont])
-            except:
-                pass
-            cont += 1
-    else:
-        for f in range(filas):
-            for c in range(columnas):
-                eje[f,c].imshow(bit_planes[cont], cmap='grey')
-                eje[f,c].axis('off')
+            if cont != len(bit_planes):
+                eje[c].imshow(bit_planes[cont], cmap='grey')
                 try:
-                    eje[f,c].set_title(titulos[cont])
+                    eje[c].set_title(titulos[cont])
                 except:
                     pass
                 cont += 1
+    else:
+        for f in range(filas):
+            for c in range(columnas):
+                eje[f,c].axis('off')
+                if cont != len(bit_planes):
+                    eje[f,c].imshow(bit_planes[cont], cmap='grey')
+                    try:
+                        eje[f,c].set_title(titulos[cont])
+                    except:
+                        pass
+                    cont += 1
     plt.show()
 
 def print_img(img, titulo):

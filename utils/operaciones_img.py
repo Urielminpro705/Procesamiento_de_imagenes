@@ -79,10 +79,10 @@ pim = io_image.read_image("data/images/pim.jpg")
 # plt.imshow(uwu, cmap='grey')
 # plt.show()
 
-def promediarImagenes(img, n_imagenes):
+def promediarImagenes(img, n_imagenes, sigma):
     h, w = img.shape
     img_promedio = np.empty((h,w))
     for i in range(n_imagenes):
-        imagen_ruido = agrega_ruido_gaussiano(img,50)
+        imagen_ruido = agrega_ruido_gaussiano(img,sigma)
         img_promedio = img_promedio + imagen_ruido
     return img_promedio/n_imagenes
