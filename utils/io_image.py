@@ -15,8 +15,8 @@ def read_image(image_path):
 
     return img
 
-def quantize(img, L):
-    q_img = np.floor((img/255)*(2**L)).astype(np.uint8)
+def quantize(img : np.array, L : int):
+    q_img = np.floor((img/255)*(2**L-1)).astype(np.uint8)
     return q_img
 
 #Lista para almacenar los diferentes niveles de cuantizacion
