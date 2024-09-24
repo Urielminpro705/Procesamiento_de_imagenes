@@ -73,6 +73,7 @@ def planes_print(bit_planes,titulos, filas, columnas):
                     except:
                         pass
                     cont += 1
+    plt.tight_layout()
     plt.show()
 
 def print_img(img, titulo):

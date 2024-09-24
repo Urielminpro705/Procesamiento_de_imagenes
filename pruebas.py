@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from utils import histograma as hi
 
-img = io.read_image("data/images/pim.jpg")
+img = io.read_image("data/images/moon.jpg")
 # pruebas = [
 #     io.image_bit_combination(img, [0,1,2,3,4,5,6,7]),
 #     io.image_bit_combination(img, [4,5,6,7]),
@@ -28,11 +28,19 @@ img = io.read_image("data/images/pim.jpg")
 # io.planes_print(imgs,["1","2","4","8","16","32","64","128","256"],2,5)
 
 
-q_img = io.quantize(img,3)
-# io.print_img(q_img,"Cuantizado a 3 bits")
-h,w = q_img.shape
-pixeles = h*w
-histograma = hi.histogram(q_img,7,False)
-print(pixeles)
-print(sum(histograma))
-print(histograma)
+# q_img = io.quantize(img,3)
+# # io.print_img(q_img,"Cuantizado a 3 bits")
+# h,w = q_img.shape
+# pixeles = h*w
+# histograma = hi.histogram(q_img,7,False)
+# print(pixeles)
+# print(sum(histograma))
+# print(histograma)
+
+
+img = io.quantize(io.read_image("data/images/moon.jpg"),3)
+img_equalizada, lut = hi.histogram_equalization(img, 7)
+histograma = hi.histogram(img, 7)
+hi.print_lut(lut)
+hi.print_histogram(img, histograma)
+# io.planes_print([img,img_equalizada],["Normal","Equalizada"],1,2)
