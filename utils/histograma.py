@@ -1,7 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from tabulate import tabulate
-import io_image as io
 
 
 def histogram(img : np.array, bins : int, normalizar : bool = False):
@@ -18,16 +17,16 @@ def histogram_equalization(img, bins):
     frec = histogram(img, bins, False)
     frec_normalizada = histogram(img, bins, True)
     probabilidad_acumulada = frec_normalizada.cumsum()
-    probabilidad_por_luminosidad = probabilidad_acumulada * bins
-    nueva_intensidad = np.floor(probabilidad_por_luminosidad[:-1])
-    nueva_intensidad = np.append(nueva_intensidad, probabilidad_por_luminosidad[-1])
+    nueva_intensidad = probabilidad_acumulada * bins
+    nueva_intensidad_final = np.floor(nueva_intensidad[:-1])
+    nueva_intensidad_final = np.append(nueva_intensidad_final, nueva_intensidad[-1])
     lut = np.array([
         list(range(0,bins+1)),
         frec,
         frec_normalizada,
         probabilidad_acumulada,
-        probabilidad_por_luminosidad,
-        nueva_intensidad
+        nueva_intensidad,
+        nueva_intensidad_final
         ])
     h,w = img.shape
     img_equializada = np.zeros((h,w))
@@ -37,7 +36,7 @@ def histogram_equalization(img, bins):
     return img_equializada, lut.transpose() 
 
 def print_lut(lut):
-    titulos = ["Intensidades","Frecuencia","F.Normalizada","3","4","5"]
+    titulos = ["Intensidades","Frecuencia","F.Normalizada","P.Acumulada","Nueva intensidad","Intensidad final"]
     print(tabulate(lut, headers = titulos, tablefmt="grid"))
 
 def print_histogram(img : np.array, hist : np.array,titulos : list = ["Imagen","Histograma"]):
@@ -75,16 +74,79 @@ def gamma_img(img, c, gamma):
     
     return img_rescaled.astype(np.uint8)
 
-L = 2**8
-img = io.read_image("data/images/pim.jpg")
-out_img = negativo_img(img, L)
-histograma = histogram(out_img,255)
-print_histogram(out_img, histograma)
+def fun_trozo1(img, umbral1):
+    h, w = img.shape
+    img_out = np.zeros((h,w))
+    for i in range(h):
+        for j in range(w):
+            intensidad = img[i,j]
+            if intensidad < umbral1:
+                img_out[i,j] = 0
+            else:
+                img_out[i,j] = 1
+    return img_out
 
-img_trans = log_img(img,10)
-histograma = histogram(img_trans,255)
-print_histogram(img_trans,histograma)
+def fun_trozo2(img, umbral1, umbral2):
+    h, w = img.shape
+    img_out = np.zeros((h,w))
+    for i in range(h):
+        for j in range(w):
+            intensidad = img[i,j]
+            if intensidad < umbral1:
+                img_out[i,j] = 0
+            elif intensidad >= umbral1 and intensidad < umbral2:
+                img_out[i,j] = 128
+            else:
+                img_out[i,j] = 255
+    return img_out
 
-img_trans = gamma_img(img,10,3)
-histograma = histogram(img_trans,255)
-print_histogram(img_trans,histograma)
+def fun_trozo3(img, umbral1, umbral2, cons):
+    h, w = img.shape
+    img_out = np.zeros((h,w))
+    for i in range(h):
+        for j in range(w):
+            intensidad = img[i,j]
+            if 0 < intensidad and intensidad <= umbral1:
+                img_out[i,j] = intensidad
+            elif intensidad >= umbral1 and intensidad < umbral2:
+                img_out[i,j] = cons
+            else:
+                img_out[i,j] = intensidad
+    return img_out
+
+def T(x, u1, u2, s1):
+    y = np.zeros(len(x))
+    for i in x:
+        xi = x[i]
+        if xi <= u1:
+            y[i] = xi
+        elif xi < u2:
+            y[i] = s1
+        else:
+            y[i] = xi
+    return y
+
+def fun_trans_LUT(img, LUT):
+    h,w = img.shape
+    img_out = np.zeros((h,w))
+    for i in range(h):
+        for j in range(w):
+            intensidad = img[i,j]
+            img_out[i,j] = LUT[intensidad]
+    return img_out
+
+
+
+# L = 2**8
+# img = io.read_image("data/images/pim.jpg")
+# out_img = negativo_img(img, L)
+# histograma = histogram(out_img,255)
+# print_histogram(out_img, histograma)
+
+# img_trans = log_img(img,10)
+# histograma = histogram(img_trans,255)
+# print_histogram(img_trans,histograma)
+
+# img_trans = gamma_img(img,10,3)
+# histograma = histogram(img_trans,255)
+# print_histogram(img_trans,histograma)
