@@ -5,6 +5,8 @@ import numpy as np
 from utils import histograma as hi
 import time
 
+img = io.read_image("data/images/moon.jpg")
+
 # pruebas = [
 #     io.image_bit_combination(img, [0,1,2,3,4,5,6,7]),
 #     io.image_bit_combination(img, [4,5,6,7]),
@@ -38,12 +40,12 @@ import time
 # print(histograma)
 
 
-# img = io.quantize(img,3)
-# h,w = img.shape
-# print(h*w)
-# img_equalizada, lut = hi.histogram_equalization(img, 7)
-# histograma = hi.histogram(img, 7)
-# hi.print_lut(lut)
+img = io.quantize(img,3)
+h,w = img.shape
+print(h*w)
+img_equalizada, lut = hi.histogram_equalization(img, 7)
+histograma = hi.histogram(img, 7)
+hi.print_lut(lut)
 
 
 
@@ -56,70 +58,70 @@ import time
 # io.planes_print([img, img_out],["Normal","Transformada"],1,2)
 
 
-x = np.arange(0,256)
-img = io.read_image("data/images/pim.jpg")
-tiempos = []
-imagenes = []
+# x = np.arange(0,256)
+# img = io.read_image("data/images/pim.jpg")
+# tiempos = []
+# imagenes = []
 
-start = time.time()
-y = hi.T(x,185,200,100)
+# start = time.time()
+# y = hi.T(x,185,200,100)
+# # img_out = hi.fun_trozo3(img, 185,200, 100)
+# img_out = hi.fun_trans_LUT(img, y)
+# end = time.time()
+# elapsed = end - start
+# tiempos.append(elapsed)
+# imagenes.append(img_out)
+
+# img = io.read_image("data/images/flor1.jpg")
+# start = time.time()
+# y = hi.T(x,185,200,100)
+# # img_out = hi.fun_trozo3(img, 185,200, 100)
+# img_out = hi.fun_trans_LUT(img, y)
+# end = time.time()
+# elapsed = end - start
+# tiempos.append(elapsed)
+# imagenes.append(img_out)
+
+# img = io.read_image("data/images/moon.jpg")
+# start = time.time()
+# y = hi.T(x,185,200,100)
+# # img_out = hi.fun_trozo3(img, 185,200, 100)
+# img_out = hi.fun_trans_LUT(img, y)
+# end = time.time()
+# elapsed = end - start
+# tiempos.append(elapsed)
+# imagenes.append(img_out)
+
+# img = io.read_image("data/images/pim.jpg")
+# start = time.time()
+# y = hi.T(x,185,200,100)
 # img_out = hi.fun_trozo3(img, 185,200, 100)
-img_out = hi.fun_trans_LUT(img, y)
-end = time.time()
-elapsed = end - start
-tiempos.append(elapsed)
-imagenes.append(img_out)
+# end = time.time()
+# elapsed = end - start
+# tiempos.append(elapsed)
+# imagenes.append(img_out)
 
-img = io.read_image("data/images/flor1.jpg")
-start = time.time()
-y = hi.T(x,185,200,100)
+# img = io.read_image("data/images/flor1.jpg")
+# start = time.time()
+# y = hi.T(x,185,200,100)
 # img_out = hi.fun_trozo3(img, 185,200, 100)
-img_out = hi.fun_trans_LUT(img, y)
-end = time.time()
-elapsed = end - start
-tiempos.append(elapsed)
-imagenes.append(img_out)
+# end = time.time()
+# elapsed = end - start
+# tiempos.append(elapsed)
+# imagenes.append(img_out)
 
-img = io.read_image("data/images/moon.jpg")
-start = time.time()
-y = hi.T(x,185,200,100)
+# img = io.read_image("data/images/moon.jpg")
+# start = time.time()
+# y = hi.T(x,185,200,100)
 # img_out = hi.fun_trozo3(img, 185,200, 100)
-img_out = hi.fun_trans_LUT(img, y)
-end = time.time()
-elapsed = end - start
-tiempos.append(elapsed)
-imagenes.append(img_out)
+# end = time.time()
+# elapsed = end - start
+# tiempos.append(elapsed)
+# imagenes.append(img_out)
 
-img = io.read_image("data/images/pim.jpg")
-start = time.time()
-y = hi.T(x,185,200,100)
-img_out = hi.fun_trozo3(img, 185,200, 100)
-end = time.time()
-elapsed = end - start
-tiempos.append(elapsed)
-imagenes.append(img_out)
+# print(f"Toma {elapsed:.6f} segundos")
+# plt.plot(x,y)
+# plt.show()
 
-img = io.read_image("data/images/flor1.jpg")
-start = time.time()
-y = hi.T(x,185,200,100)
-img_out = hi.fun_trozo3(img, 185,200, 100)
-end = time.time()
-elapsed = end - start
-tiempos.append(elapsed)
-imagenes.append(img_out)
-
-img = io.read_image("data/images/moon.jpg")
-start = time.time()
-y = hi.T(x,185,200,100)
-img_out = hi.fun_trozo3(img, 185,200, 100)
-end = time.time()
-elapsed = end - start
-tiempos.append(elapsed)
-imagenes.append(img_out)
-
-print(f"Toma {elapsed:.6f} segundos")
-plt.plot(x,y)
-plt.show()
-
-# hi.print_histogram(img, hi.histogram(img, 255, False))
-io.planes_print(imagenes,tiempos,2,3)
+# # hi.print_histogram(img, hi.histogram(img, 255, False))
+# io.planes_print(imagenes,tiempos,2,3)

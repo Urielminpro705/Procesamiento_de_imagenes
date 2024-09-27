@@ -36,7 +36,7 @@ def histogram_equalization(img, bins):
     return img_equializada, lut.transpose() 
 
 def print_lut(lut):
-    titulos = ["Intensidades","Frecuencia","F.Normalizada","P.Acumulada","Nueva intensidad","Intensidad final"]
+    titulos = ["Intensidad","Frecuencia","F.Normalizada","P.Acumulada","Nueva intensidad","Intensidad final"]
     print(tabulate(lut, headers = titulos, tablefmt="grid"))
 
 def print_histogram(img : np.array, hist : np.array,titulos : list = ["Imagen","Histograma"]):
