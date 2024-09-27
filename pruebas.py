@@ -41,7 +41,6 @@ img = io.read_image("data/images/flor1.jpg")
 
 
 img = io.quantize(img,3)
-h,w = img.shape
 img_equalizada, lut = hi.histogram_equalization(img, 7)
 histograma1 = hi.histogram(img, 7)
 histograma2 = hi.histogram(img_equalizada, 7)
