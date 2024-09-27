@@ -29,11 +29,11 @@ def histogram_equalization(img, bins):
         nueva_intensidad_final
         ])
     h,w = img.shape
-    img_equializada = np.zeros((h,w))
+    img_ecualizada = np.zeros((h,w))
     for f in range(h):
         for c in range(w):
-            img_equializada[f,c] = lut[5][img[f,c]]
-    return img_equializada, lut.transpose() 
+            img_ecualizada[f,c] = lut[5,img[f,c]]
+    return img_ecualizada.astype(np.uint8), lut.transpose() 
 
 def print_lut(lut):
     titulos = ["Intensidad","Frecuencia","F.Normalizada","P.Acumulada","Nueva intensidad","Intensidad final"]
@@ -47,6 +47,31 @@ def print_histogram(img : np.array, hist : np.array,titulos : list = ["Imagen","
 
     eje[1].plot(hist)
     eje[1].set_title(titulos[1])
+
+    plt.tight_layout()
+    plt.show()
+
+def print_histogram_comparation(
+        img1 : np.array, 
+        hist1 : np.array, 
+        img2 : np.array, 
+        hist2 : np.array, 
+        titulos1 : list = ["Imagen","Histograma"],
+        titulos2 : list = ["Imagen","Histograma"]):
+    figura, eje = plt.subplots(2,2)
+    eje[0,0].imshow(img1, cmap="gray")
+    eje[0,0].set_title(titulos1[0])
+    eje[0,0].axis("off")
+
+    eje[0,1].plot(hist1)
+    eje[0,1].set_title(titulos1[1])
+
+    eje[1,0].imshow(img2, cmap="gray")
+    eje[1,0].set_title(titulos2[0])
+    eje[1,0].axis("off")
+
+    eje[1,1].plot(hist2)
+    eje[1,1].set_title(titulos2[1])
 
     plt.tight_layout()
     plt.show()

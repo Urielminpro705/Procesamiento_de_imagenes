@@ -5,7 +5,7 @@ import numpy as np
 from utils import histograma as hi
 import time
 
-img = io.read_image("data/images/moon.jpg")
+img = io.read_image("data/images/flor1.jpg")
 
 # pruebas = [
 #     io.image_bit_combination(img, [0,1,2,3,4,5,6,7]),
@@ -42,9 +42,10 @@ img = io.read_image("data/images/moon.jpg")
 
 img = io.quantize(img,3)
 h,w = img.shape
-print(h*w)
 img_equalizada, lut = hi.histogram_equalization(img, 7)
-histograma = hi.histogram(img, 7)
+histograma1 = hi.histogram(img, 7)
+histograma2 = hi.histogram(img_equalizada, 7)
+hi.print_histogram_comparation(img, histograma1, img_equalizada, histograma2, ["Original","Histograma"], ["Ecualizada","Histograma"])
 hi.print_lut(lut)
 
 
