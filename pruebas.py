@@ -1,11 +1,13 @@
 import utils.io_image as io
-from utils.operaciones_img import promediarImagenes
+from utils.operaciones_img import promediarImagenes, agrega_ruido_gaussiano
 import matplotlib.pyplot as plt 
 import numpy as np
 from utils import histograma as hi
 import time
+from utils.filters import conv2d, filtro_promedio, gaussian_kernel
+from scipy.signal import convolve2d, correlate2d
 
-img = io.read_image("data/images/flor1.jpg")
+img = io.read_image("data/images/pim.jpg")
 
 # pruebas = [
 #     io.image_bit_combination(img, [0,1,2,3,4,5,6,7]),
@@ -40,12 +42,12 @@ img = io.read_image("data/images/flor1.jpg")
 # print(histograma)
 
 
-img = io.quantize(img,3)
-img_equalizada, lut = hi.histogram_equalization(img, 7)
-histograma1 = hi.histogram(img, 7)
-histograma2 = hi.histogram(img_equalizada, 7)
-hi.print_histogram_comparation(img, histograma1, img_equalizada, histograma2, ["Original","Histograma"], ["Ecualizada","Histograma"])
-hi.print_lut(lut)
+# img = io.quantize(img,3)
+# img_equalizada, lut = hi.histogram_equalization(img, 7)
+# histograma1 = hi.histogram(img, 7)
+# histograma2 = hi.histogram(img_equalizada, 7)
+# hi.print_histogram_comparation(img, histograma1, img_equalizada, histograma2, ["Original","Histograma"], ["Ecualizada","Histograma"])
+# hi.print_lut(lut)
 
 
 
@@ -125,3 +127,15 @@ hi.print_lut(lut)
 
 # # hi.print_histogram(img, hi.histogram(img, 255, False))
 # io.planes_print(imagenes,tiempos,2,3)
+
+kernel = np.array([
+    [-1,-2,1],
+    [0,0,0],
+    [1,2,1]])
+
+kernel = filtro_promedio(9)
+kernel = gaussian_kernel(20, 3)
+img = agrega_ruido_gaussiano(img, 20)
+img_conv = conv2d(img, kernel)
+img_conv2 = convolve2d(img, kernel, mode='full', boundary='fill', fillvalue=0)
+io.planes_print([img,img_conv,img_conv2],["Original","Convolucion mio","Convolucion"],1,3)
