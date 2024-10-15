@@ -134,7 +134,7 @@ kernel = np.array([
     [1,2,1]])
 
 kernel = filtro_promedio(9)
-kernel = gaussian_kernel(20, 3)
+kernel = gaussian_kernel(20, 11)
 img = agrega_ruido_gaussiano(img, 20)
 img_conv = conv2d(img, kernel)
 img_conv2 = convolve2d(img, kernel, mode='full', boundary='fill', fillvalue=0)

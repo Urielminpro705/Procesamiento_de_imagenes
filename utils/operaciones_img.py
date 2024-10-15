@@ -66,7 +66,6 @@ def ruido_sal_pimienta(img, p):
             else:
                 img_out[i,j] = ruido[i,j]
     return img_out
-    
 
 pim = io_image.read_image("data/images/pim.jpg")
 # img_ruido, img_out = agrega_ruido_gaussiano(pim, 1)

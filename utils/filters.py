@@ -1,30 +1,21 @@
 import numpy as np
-import math
 
 def conv2d(img, k):
-    k_rotado = np.rot90(k, k=2)
-    hk,wk = k_rotado.shape
-    h,w = img.shape
-    padding = math.floor(hk/2)
+    hk,wk = k.shape
     if not hk % 2:
-        print("El tamaño del kernel tiene que se un numero impar")
+        print("El tamaño del kernel tiene que ser un numero impar")
         return img
     else:
-        padding_img = np.zeros((h+(2*padding),w+(2*padding)))
+        h,w = img.shape
+        k_rotado = np.rot90(k, k=2)
+        padding = hk // 2
         img_out = np.zeros((h,w))
-        for f in range(padding, h+padding):
-            for c in range(padding, w+padding):
-                padding_img[f,c] = img[f-padding,c-padding]
-        
+        padding_img = np.pad(img, pad_width=padding)
         for f in range(h):
             for c in range(w):
-                total_celda = 0
-                for fk in range(hk):
-                    for ck in range(wk):
-                        total_celda = total_celda + (k_rotado[fk,ck] * padding_img[fk+f,ck+c])
-                img_out[f,c] = total_celda
+                img_out[f,c] = np.sum(k_rotado * padding_img[f:(f+hk),c:(c+wk)])
         return img_out
-    
+
 def filtro_promedio(n):
     if n % 2:
         k = np.ones((n,n))/(n**2)
