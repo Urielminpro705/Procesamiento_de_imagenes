@@ -4,10 +4,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 from utils import histograma as hi
 import time
-from utils.filters import conv2d, filtro_promedio, gaussian_kernel
+from utils.filters import conv2d, filtro_promedio, gaussian_kernel, media_aritmetica, media_geometrica
 from scipy.signal import convolve2d, correlate2d
 
-img = io.read_image("data/images/pim.jpg")
+img = io.read_image("data/images/flor1.jpg")
 
 # pruebas = [
 #     io.image_bit_combination(img, [0,1,2,3,4,5,6,7]),
@@ -128,14 +128,32 @@ img = io.read_image("data/images/pim.jpg")
 # # hi.print_histogram(img, hi.histogram(img, 255, False))
 # io.planes_print(imagenes,tiempos,2,3)
 
-kernel = np.array([
-    [-1,-2,1],
-    [0,0,0],
-    [1,2,1]])
+# kernel = np.array([
+#     [-1,-2,1],
+#     [0,0,0],
+#     [1,2,1]])
 
-kernel = filtro_promedio(9)
-kernel = gaussian_kernel(20, 11)
-img = agrega_ruido_gaussiano(img, 20)
-img_conv = conv2d(img, kernel)
-img_conv2 = convolve2d(img, kernel, mode='full', boundary='fill', fillvalue=0)
-io.planes_print([img,img_conv,img_conv2],["Original","Convolucion mio","Convolucion"],1,3)
+# kernel = filtro_promedio(9)
+# kernel = gaussian_kernel(20, 11)
+# img = agrega_ruido_gaussiano(img, 20)
+# img_conv = conv2d(img, kernel)
+# img_conv2 = convolve2d(img, kernel, mode='full', boundary='fill', fillvalue=0)
+# io.planes_print([img,img_conv,img_conv2],["Original","Convolucion mio","Convolucion"],1,3)
+
+# img_gamma = hi.gamma_img(img, 1, 2)
+# img = np.array([
+#     [22,25,21],
+#     [29,22,29],
+#     [25,21,28]
+# ])
+# img_gamma = hi.gamma_img(img, 1, 1.5)
+# print(img_gamma)
+# img_log = hi.log_img(img, 1)
+# img_gamma = hi.gamma_img(img, 1, 0.1)
+# io.planes_print([img,img_gamma,img_log],["Original","Gamma","Log"],1,3)
+# img_pedazos = hi.fun_trozoNega(img, 30, 255)
+# io.planes_print([img,img_pedazos],["Original","Por trozos"],1,2)
+
+img_out = media_geometrica(img, 11)
+io.planes_print([img,img_out],["original","filtro"],1,2)
+# io.print_img(img_out, "UWU")

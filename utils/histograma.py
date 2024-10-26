@@ -93,9 +93,9 @@ def log_img(img, c):
     return np.floor(img_trans).astype(np.uint8)
 
 def gamma_img(img, c, gamma):
-    img = img.astype(np.float32) / 255
+    img = img.astype(np.float32)
     img_gamma = c * (img ** gamma)
-    img_rescaled = np.clip(img_gamma * 255, 0, 255)
+    img_rescaled = np.clip(img_gamma, 0, 255)
     
     return img_rescaled.astype(np.uint8)
 
@@ -135,6 +135,20 @@ def fun_trozo3(img, umbral1, umbral2, cons):
                 img_out[i,j] = intensidad
             elif intensidad >= umbral1 and intensidad < umbral2:
                 img_out[i,j] = cons
+            else:
+                img_out[i,j] = intensidad
+    return img_out
+
+def fun_trozoNega(img, umbral1, umbral2):
+    h, w = img.shape
+    img_out = np.zeros((h,w))
+    for i in range(h):
+        for j in range(w):
+            intensidad = img[i,j]
+            if intensidad < umbral1:
+                img_out[i,j] = intensidad
+            elif intensidad >= umbral1 and intensidad <= umbral2:
+                img_out[i,j] = 255 - intensidad
             else:
                 img_out[i,j] = intensidad
     return img_out

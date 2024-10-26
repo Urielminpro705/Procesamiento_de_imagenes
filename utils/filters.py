@@ -40,17 +40,40 @@ def gaussian_kernel(sigma=1, n=3):
 
     return g
 
+def media_aritmetica(img, w_size):
+    if not w_size % 2:
+        print("El tamaño del filtro debe ser impar")
+        return img
+    else:
+        h,w = img.shape
+        padding = w_size // 2
+        img_out = np.zeros((h,w))
+        padding_img = np.pad(img, pad_width=padding)
+        for f in range(h):
+            for c in range(w):
+                img_out[f,c] = np.mean(padding_img[f:(f+w_size),c:(c+w_size)])
+    return img_out
+
+def media_geometrica(img, w_size):
+    if not w_size % 2:
+        print("El tamaño del filtro debe ser impar")
+        return img
+    else:
+        img = img.astype(np.float64)
+        h,w = img.shape
+        padding = w_size // 2
+        img_out = np.zeros((h,w))
+        padding_img = np.pad(img, pad_width=padding)
+        for f in range(h):
+            for c in range(w):
+                img_out[f,c] = np.prod(padding_img[f:(f+w_size),c:(c+w_size)])**(1/(w_size**2))
+    return img_out
+
 # img = np.array([
 #     [15,13,13],
 #     [23,27,23],
 #     [23,27,23],
 # ])
 
-# kernel = [
-#     [-1,-1,-1],
-#     [0,5,0],
-#     [-1,0,0]
-# ]
-
-# img_out = conv2d(img, kernel)
+# img_out = media_aritmetica(img, 3)
 # print(img_out)
